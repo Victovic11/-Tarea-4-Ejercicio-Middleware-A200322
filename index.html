@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Middleware API</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenido a la API de Solicitudes</h1>
+        <button id="fetchButton">Obtener Solicitudes</button>
+        <div id="result" class="result"></div>
+    </div>
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', function() {
+            fetch('/solicitudes')
+                .then(response => {
+                    if (!response.ok) throw new Error('Error al obtener solicitudes');
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('result').innerText = JSON.stringify(data);
+                })
+                .catch(error => {
+                    document.getElementById('result').innerText = 'Excepción al conectar con la API: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
